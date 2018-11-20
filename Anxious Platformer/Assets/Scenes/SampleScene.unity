@@ -612,7 +612,10 @@ MonoBehaviour:
     m_Bits: 512
   jumpForce: 4
   jumpTime: 0.25
+  canJump: 0
   myMoveSpeed: 3
+  canGoLeft: 0
+  canGoRight: 0
   stoppedJumping: 0
   isHoldingJump: 0
   jumpTimeCounter: 0

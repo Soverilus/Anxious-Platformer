@@ -18,6 +18,7 @@ public class VerticalMovement {
     bool isHoldingJump;
     bool grounded;
     bool stoppedJumping;
+    bool canJump;
 
 
     /*this bool is to tell us whether you are on the ground or not
@@ -60,12 +61,26 @@ public class VerticalMovement {
         myPM = myMS.myPhysMaterial;
         origFriction = myPM.friction;
         playerCol = player.GetComponent<Collider2D>();
+        canJump = myMS.canJump;
     }
 
     public void NewUpdate() {
         SendStats();
         GroundChecker();
-        JumpFunct();
+        if (canJump) {
+            JumpFunct();
+        }
+        else CantJump();
+    }
+
+    void CantJump() {
+        if (Input.GetAxisRaw("Jump") > 0) {
+            if (isHoldingJump == false) {
+                isHoldingJump = true;
+                //queue text fade for can't go left
+                Debug.Log("I'm too scared to jump");
+            }
+        }
     }
 
     void SendStats() {
@@ -133,7 +148,7 @@ public class VerticalMovement {
         //if you stop holding down the jump button...
         if (Input.GetAxisRaw("Jump") == 0) {
             if (!grounded) {
-                myRB.velocity = new Vector2(Mathf.Clamp(myRB.velocity.x + myMS.input.x * 0.05f, -myMoveSpeed, myMoveSpeed), myRB.velocity.y);
+                myRB.velocity = new Vector2(Mathf.Clamp(myRB.velocity.x + myMS.input.x * 0.05f, -myMoveSpeed, myMoveSpeed), Mathf.Clamp(myRB.velocity.y, -jumpForce*2f, jumpForce*2f));
             }
             isHoldingJump = false;
             //stop jumping and set your counter to zero.  The timer will reset once we touch the ground again in the Groundchecker function.

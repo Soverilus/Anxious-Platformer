@@ -10,16 +10,20 @@ public class MovementStats : MonoBehaviour {
     public GameObject groundChecker;
     public PhysicsMaterial2D myPhysMaterial;
     public float friction;
+    Rigidbody2D myRB;
     [Space(10)]
 
     [Header("Editor Values (Jump)")]
     public LayerMask whatIsGround;
     public float jumpForce;
     public float jumpTime;
+    public bool canJump;
     [Space(10)]
 
     [Header("Editor Values (Run)")]
     public float myMoveSpeed;
+    public bool canGoLeft;
+    public bool canGoRight;
     [Space(10)]
 
     [Header("In-Game Values (Jump)")]
@@ -41,6 +45,7 @@ public class MovementStats : MonoBehaviour {
 
     void SettleMiscValues() {
         myPhysMaterial = GetComponent<Collider2D>().sharedMaterial;
+        myRB = GetComponent<Rigidbody2D>();
     }
 
     void GetMovements() {

@@ -11,6 +11,10 @@ public class HorizontalMovement {
     Vector2 input;
     public float myMoveSpeed;
     public GameObject player;
+    bool canGoRight;
+    bool canGoLeft;
+    bool hasDisplayedLeft = false;
+    bool hasDisplayedRight = false;
 
     public void NewStart() {
         GrabStats();
@@ -24,6 +28,8 @@ public class HorizontalMovement {
         friction = myPM.friction;
         myMoveSpeed = myMS.myMoveSpeed;
         playerCol = player.GetComponent<Collider2D>();
+        canGoLeft = myMS.canGoLeft;
+        canGoRight = myMS.canGoRight;
     }
 
     public void NewUpdate() {
@@ -38,15 +44,41 @@ public class HorizontalMovement {
         myMS.input = input;
     }
 
+    void CantMoveLeft() {
+        if (!hasDisplayedLeft) {
+            hasDisplayedLeft = true;
+            //queue text fade for can't go left
+            Debug.Log("I refuse to go backwards");
+        }
+    }
+
+    void CantMoveRight() {
+        if (!hasDisplayedRight) {
+            hasDisplayedRight = true;
+            //queue text fade for can't go right
+            Debug.Log("If I go that way I'll get hurt");
+        }
+    }
+
     void MovementFunct() {
         float myXMovement = Mathf.Clamp(myRB.velocity.x + 0.05f * myMoveSpeed * input.x, -myMoveSpeed, myMoveSpeed);
         //if my input is towards the right
         if (input.x > 0f && myRB.velocity.x >= 0f) {
-            myRB.velocity = new Vector2(myXMovement, myRB.velocity.y);
+            if (canGoRight) {
+                myRB.velocity = new Vector2(myXMovement, myRB.velocity.y);
+            }
+            else {
+                CantMoveRight();
+            }
         }
         //if my input is towards the left
         if (input.x < 0f && myRB.velocity.x <= 0f) {
-            myRB.velocity = new Vector2(myXMovement, myRB.velocity.y);
+            if (canGoLeft) {
+                myRB.velocity = new Vector2(myXMovement, myRB.velocity.y);
+            }
+            else {
+                CantMoveLeft();
+            }
         }
         if ((myRB.velocity.x > 0f && input.x <= 0f) ||
             (myRB.velocity.x < 0f && input.x >= 0f)){
