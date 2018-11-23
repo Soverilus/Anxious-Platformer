@@ -6,6 +6,7 @@ public class GameController : MonoBehaviour {
 
     [HideInInspector]
     public int whichTile;
+
 	public void Victory() {
 
     }

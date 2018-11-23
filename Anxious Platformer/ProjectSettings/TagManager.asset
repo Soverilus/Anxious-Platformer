@@ -18,7 +18,7 @@ TagManager:
   - Ground
   - Player
   - GroundCheck
-  - 
+  - Wall
   - 
   - 
   - 
@@ -42,6 +42,18 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 4224001777
+    locked: 0
+  - name: Background+1
+    uniqueID: 4160492093
+    locked: 0
+  - name: Background+2
+    uniqueID: 1423007325
+    locked: 0
   - name: Tile
     uniqueID: 1397686347
+    locked: 0
+  - name: Player
+    uniqueID: 1219760581
     locked: 0
