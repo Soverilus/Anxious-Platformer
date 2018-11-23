@@ -19,6 +19,7 @@ public class VerticalMovement {
     bool grounded;
     bool stoppedJumping;
     bool canJump;
+    public float airControlMult;
 
 
     /*this bool is to tell us whether you are on the ground or not
@@ -134,21 +135,21 @@ public class VerticalMovement {
         //if you keep holding down the jump button...
         if (isHoldingJump) {
             if (!grounded) {
-                myRB.velocity = new Vector2(Mathf.Clamp(myRB.velocity.x + myMS.input.x * 0.05f, -myMoveSpeed, myMoveSpeed), myRB.velocity.y);
+                myRB.velocity = new Vector2(Mathf.Clamp(myRB.velocity.x + myMS.input.x * airControlMult, -myMoveSpeed, myMoveSpeed), myRB.velocity.y);
             }
             if (!stoppedJumping) {
                 //and your counter hasn't reached zero...
                 if (jumpTimeCounter < jumpTime) {
                     jumpTimeCounter += Time.deltaTime;
                     //allow for slight horizontal adjustments
-                    myRB.velocity = new Vector2(Mathf.Clamp(myRB.velocity.x + myMS.input.x * 0.05f, -myMoveSpeed, myMoveSpeed), jumpForce);
+                    myRB.velocity = new Vector2(Mathf.Clamp(myRB.velocity.x + myMS.input.x * airControlMult, -myMoveSpeed, myMoveSpeed), jumpForce);
                 }
             }
         }
         //if you stop holding down the jump button...
         if (Input.GetAxisRaw("Jump") == 0) {
             if (!grounded) {
-                myRB.velocity = new Vector2(Mathf.Clamp(myRB.velocity.x + myMS.input.x * 0.05f, -myMoveSpeed, myMoveSpeed), Mathf.Clamp(myRB.velocity.y, -jumpForce*2f, jumpForce*2f));
+                myRB.velocity = new Vector2(Mathf.Clamp(myRB.velocity.x + myMS.input.x * airControlMult, -myMoveSpeed, myMoveSpeed), Mathf.Clamp(myRB.velocity.y, -jumpForce*2f, jumpForce*2f));
             }
             isHoldingJump = false;
             //stop jumping and set your counter to zero.  The timer will reset once we touch the ground again in the Groundchecker function.

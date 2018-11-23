@@ -29,6 +29,7 @@ public class MovementStats : MonoBehaviour {
     public float jumpForce;
     public float jumpTime;
     public bool canJump;
+    public float airControlMult;
     [Space(10)]
 
     [Header("Editor Values (Run)")]
@@ -73,6 +74,7 @@ public class MovementStats : MonoBehaviour {
         myVM = new VerticalMovement();
         myVM.player = gameObject;
         myVM.groundChecker = groundChecker;
+        myVM.airControlMult = airControlMult;
     }
 
     void GetHorizontal() {

@@ -15,6 +15,7 @@ public class GameController : MonoBehaviour {
         switch (type) {
             default:
                 Debug.LogError("No Death Type Recorded! Check MovementStats collisions and GameController.Death() for possible problems.");
+                
                 break;
 
             case 0:
