@@ -6,10 +6,13 @@ using UnityEngine.UI;
 public class GameController : MonoBehaviour {
 
     [Header("Possible Texts")]
+    public string[] victory;
     public string[] myFall;
     public string[] myLoss;
     public string[] myTrapLoss;
     public string[] myTimeLoss;
+    bool hasFadedIn = false;
+    public float myFadeInSpeed;
     [Space(10)]
 
     [HideInInspector]
@@ -22,46 +25,73 @@ public class GameController : MonoBehaviour {
     }
 
     private void Start() {
-       myDisplayChoice = Random.Range(0, 5);
+        myDisplayChoice = Random.Range(0, 5);
+        myDisplay.color = new Color(myDisplay.color.r, myDisplay.color.g, myDisplay.color.b, 0f);
     }
 
-    public void Death(int type) {
-        switch (type) {
-            default:
-                Debug.LogError("No Death Type Recorded! Check MovementStats collisions and GameController.Death() for possible problems.");
-                break;
-
-            case 0:
+    public void Death(string deathType) {
+        switch (deathType) {
+            case "Fall":
                 FallSwitch();
                 break;
 
-            case 1:
+            case "Enemy":
                 EnemySwitch();
                 break;
 
-            case 2:
+            case "Trap":
                 TrapSwitch();
                 break;
 
-            case 3:
+            case "Time":
                 TimeSwitch();
+                break;
+
+            default:
+                Debug.LogError("No Death Type Recorded! Check MovementStats collisions and GameController.Death() for possible problems.");
                 break;
         }
     }
 
     void FallSwitch() {
         myDisplay.text = myFall[myDisplayChoice];
+        if (!hasFadedIn) {
+            FadeTextToFullAlpha(myFadeInSpeed, myDisplay);
+        }
     }
 
     void EnemySwitch() {
         myDisplay.text = myLoss[myDisplayChoice];
+        if (!hasFadedIn) {
+            FadeTextToFullAlpha(myFadeInSpeed, myDisplay);
+        }
     }
 
     void TrapSwitch() {
         myDisplay.text = myTrapLoss[myDisplayChoice];
+        if (!hasFadedIn) {
+            FadeTextToFullAlpha(myFadeInSpeed, myDisplay);
+        }
     }
 
     void TimeSwitch() {
         myDisplay.text = myTimeLoss[myDisplayChoice];
+        if (!hasFadedIn) {
+            FadeTextToFullAlpha(myFadeInSpeed, myDisplay);
+        }
     }
+
+    void FadeTextToFullAlpha(float t, Text i) {
+        if (i.color.a < 1.0f) {
+            i.color = new Color(i.color.r, i.color.g, i.color.b, i.color.a + (Time.deltaTime / t));
+        }
+        else hasFadedIn = true;
+    }
+
+    /*void FadeTextToZeroAlpha(float t, Text i) {
+        if (i.color.a > 0.0f) {
+            i.color = new Color(i.color.r, i.color.g, i.color.b, i.color.a - (Time.deltaTime / t));
+        }
+        else hasFadedOut = true;
+    }*/
 }

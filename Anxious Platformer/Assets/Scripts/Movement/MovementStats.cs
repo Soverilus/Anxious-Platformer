@@ -17,15 +17,15 @@ public class MovementStats : MonoBehaviour {
     public LayerMask whatIsEnemyDeath;
     public LayerMask whatIsTrapDeath;
     public float fallDeath;
-    Collider2D myCol;
-    Vector3 originalGravity;
-    Rigidbody2D myRB;
     public float timeLeft;
     public float maxTime;
     public int whichTile;
     public Transform myEndGoalTransform;
     [HideInInspector]
     public float myEndGoal;
+    Collider2D myCol;
+    Vector3 originalGravity;
+    Rigidbody2D myRB;
     [Space(10)]
 
     [Header("Editor Values (Jump)")]
@@ -103,20 +103,21 @@ public class MovementStats : MonoBehaviour {
     }
 
     void CheckVictoryDeathConditions() {
+        timeLeft -= Time.deltaTime;
         if (myCol.IsTouchingLayers(whatIsFlag)){
             myGameController.Victory();
         }
         if (myCol.IsTouchingLayers(whatIsFallDeath)) {
-            myGameController.Death(0);
+            myGameController.Death("Fall");
         }
         if (myCol.IsTouchingLayers(whatIsEnemyDeath)) {
-            myGameController.Death(1);
+            myGameController.Death("Enemy");
         }
         if (myCol.IsTouchingLayers(whatIsTrapDeath)) {
-            myGameController.Death(2);
+            myGameController.Death("Trap");
         }
         if (timeLeft <= 0) {
-            myGameController.Death(3);
+            myGameController.Death("Time");
         }
     }
 }
