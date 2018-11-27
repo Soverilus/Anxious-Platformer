@@ -38,6 +38,7 @@ public class HorizontalMovement {
         SendStats();
         if (myMS.myEndGoal <= player.transform.position.x) {
             input.x = 1;
+            myMS.IWon();
         }
         else {
             if (canGoLeft) {

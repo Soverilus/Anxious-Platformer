@@ -4,6 +4,7 @@ using UnityEngine;
 
 using UnityEngine.UI;
 public class GameController : MonoBehaviour {
+    StatHandler mySH;
     MovementStats myMS;
     [Header("Possible Texts")]
     public string[] victory;
@@ -21,10 +22,14 @@ public class GameController : MonoBehaviour {
     int myDisplayChoice;
 
     public void Victory() {
-
+        myDisplay.text = victory[/*myday*/0];
+        if (!hasFadedIn) {
+            FadeTextToFullAlpha(myFadeInSpeed, myDisplay);
+        }
     }
 
     private void Start() {
+        mySH = GameObject.FindGameObjectWithTag("StatHandler").GetComponent<StatHandler>();
         myMS = GameObject.FindGameObjectWithTag("Player").GetComponent<MovementStats>();
         myDisplayChoice = Random.Range(0, 5);
         myDisplay.color = new Color(myDisplay.color.r, myDisplay.color.g, myDisplay.color.b, 0f);

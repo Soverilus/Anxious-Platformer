@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class AnimatorController : MonoBehaviour {
     Animator myAnim;
     GameObject myPlayer;
@@ -9,6 +9,7 @@ public class AnimatorController : MonoBehaviour {
     Rigidbody2D playerRB;
     Rigidbody2D myRB;
     SpriteRenderer mySR;
+    bool hasAddedForce = false;
 
     float myMaxMoveSpeed;
     float myMoveSpeed;
@@ -77,7 +78,21 @@ public class AnimatorController : MonoBehaviour {
 
     void DeathCheck() {
         if (myMS.isDead == true) {
-            myAnim.SetTrigger("Dead");
+            myAnim.speed = 1f;
+            myAnim.SetTrigger("Death");
+            myRB.isKinematic = false;
+            playerRB.velocity = Vector3.zero;
+            myPlayer.transform.position = myPlayer.transform.position;
+            playerRB.isKinematic = true;
+            if (!hasAddedForce) {
+                myRB.AddForce(Vector2.up * 25f *-Physics.gravity);
+                hasAddedForce = true;
+            }
+            Invoke("RestartScene", 4f);
         }
+    }
+
+    void RestartScene() {
+        SceneManager.LoadScene(1);
     }
 }

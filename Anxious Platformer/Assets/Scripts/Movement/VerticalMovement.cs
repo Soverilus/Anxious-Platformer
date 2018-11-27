@@ -149,7 +149,7 @@ public class VerticalMovement {
         //if you stop holding down the jump button...
         if (Input.GetAxisRaw("Jump") == 0) {
             if (!grounded) {
-                myRB.velocity = new Vector2(Mathf.Clamp(myRB.velocity.x + myMS.input.x * airControlMult, -myMoveSpeed, myMoveSpeed), Mathf.Clamp(myRB.velocity.y, -jumpForce*2f, jumpForce*2f));
+                myRB.velocity = new Vector2(Mathf.Clamp(myRB.velocity.x + myMS.input.x * airControlMult, -myMoveSpeed, myMoveSpeed), Mathf.Clamp(myRB.velocity.y, -16f, jumpForce*2f));
             }
             isHoldingJump = false;
             //stop jumping and set your counter to zero.  The timer will reset once we touch the ground again in the Groundchecker function.
