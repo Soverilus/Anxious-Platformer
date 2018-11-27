@@ -16,12 +16,16 @@ public class MovementStats : MonoBehaviour {
     public LayerMask whatIsFallDeath;
     public LayerMask whatIsEnemyDeath;
     public LayerMask whatIsTrapDeath;
+    public float fallDeath;
     Collider2D myCol;
     Vector3 originalGravity;
     Rigidbody2D myRB;
     public float timeLeft;
     public float maxTime;
     public int whichTile;
+    public Transform myEndGoalTransform;
+    [HideInInspector]
+    public float myEndGoal;
     [Space(10)]
 
     [Header("Editor Values (Jump)")]
@@ -63,6 +67,7 @@ public class MovementStats : MonoBehaviour {
         timeLeft = maxTime;
         myGameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         myGameController.whichTile = whichTile;
+        myEndGoal = myEndGoalTransform.position.x;
     }
 
     void GetMovements() {

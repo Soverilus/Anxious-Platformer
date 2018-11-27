@@ -15,6 +15,8 @@ public class HorizontalMovement {
     bool canGoLeft;
     bool hasDisplayedLeft = false;
     bool hasDisplayedRight = false;
+    float maxClamp;
+    float minClamp;
 
     public void NewStart() {
         GrabStats();
@@ -34,7 +36,26 @@ public class HorizontalMovement {
 
     public void NewUpdate() {
         SendStats();
-        input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        if (myMS.myEndGoal <= player.transform.position.x) {
+            input.x = 1;
+        }
+        else {
+            if (canGoLeft) {
+                minClamp = -1f;
+            }
+            else {
+                minClamp = 0f;
+                CantMoveLeft();
+            }
+            if (canGoRight) {
+                maxClamp = 1f;
+            }
+            else {
+                maxClamp = 0f;
+                CantMoveRight();
+            }
+            input = new Vector2(Mathf.Clamp(Input.GetAxisRaw("Horizontal"), minClamp, maxClamp), Input.GetAxisRaw("Vertical"));
+        }
         if (myMS.grounded) {
             MovementFunct();
         }
@@ -67,17 +88,12 @@ public class HorizontalMovement {
             if (canGoRight) {
                 myRB.velocity = new Vector2(myXMovement, myRB.velocity.y);
             }
-            else {
-                CantMoveRight();
-            }
         }
+
         //if my input is towards the left
         if (input.x < 0f && myRB.velocity.x <= 0f) {
             if (canGoLeft) {
                 myRB.velocity = new Vector2(myXMovement, myRB.velocity.y);
-            }
-            else {
-                CantMoveLeft();
             }
         }
         if ((myRB.velocity.x > 0f && input.x <= 0f) ||
