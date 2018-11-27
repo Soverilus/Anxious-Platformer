@@ -26,6 +26,8 @@ public class MovementStats : MonoBehaviour {
     Collider2D myCol;
     Vector3 originalGravity;
     Rigidbody2D myRB;
+    [HideInInspector]
+    public bool isDead = false;
     [Space(10)]
 
     [Header("Editor Values (Jump)")]

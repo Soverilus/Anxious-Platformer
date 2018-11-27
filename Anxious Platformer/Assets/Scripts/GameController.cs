@@ -4,7 +4,7 @@ using UnityEngine;
 
 using UnityEngine.UI;
 public class GameController : MonoBehaviour {
-
+    MovementStats myMS;
     [Header("Possible Texts")]
     public string[] victory;
     public string[] myFall;
@@ -25,6 +25,7 @@ public class GameController : MonoBehaviour {
     }
 
     private void Start() {
+        myMS = GameObject.FindGameObjectWithTag("Player").GetComponent<MovementStats>();
         myDisplayChoice = Random.Range(0, 5);
         myDisplay.color = new Color(myDisplay.color.r, myDisplay.color.g, myDisplay.color.b, 0f);
     }
@@ -33,18 +34,22 @@ public class GameController : MonoBehaviour {
         switch (deathType) {
             case "Fall":
                 FallSwitch();
+                myMS.isDead = true;
                 break;
 
             case "Enemy":
                 EnemySwitch();
+                myMS.isDead = true;
                 break;
 
             case "Trap":
                 TrapSwitch();
+                myMS.isDead = true;
                 break;
 
             case "Time":
                 TimeSwitch();
+                myMS.isDead = true;
                 break;
 
             default:
