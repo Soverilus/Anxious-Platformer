@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4164097337223802}
   - component: {fileID: 70359163626296392}
+  - component: {fileID: 114624162001341988}
   - component: {fileID: 50172029919741646}
   - component: {fileID: 114595419952732284}
   m_Layer: 10
@@ -242,6 +243,17 @@ MonoBehaviour:
   grounded: 0
   jumpSpecialTimer: 0
   input: {x: 0, y: 0}
+--- !u!114 &114624162001341988
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1354174790471750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e047becf3abd8514fb240968bec87fec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114673885722773458
 MonoBehaviour:
   m_ObjectHideFlags: 1

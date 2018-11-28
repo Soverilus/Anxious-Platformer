@@ -62,14 +62,4 @@ public class StatHandler : MonoBehaviour {
     public void StatHandlerUpdate() {
 
     }
-
-//GameController needs to pull day number and clamp it to 0, 10
-//MovementStats misc:
-    //canGoRight
-    //canGoLeft
-    //Gravity
-    //myMoveSpeed
-    //jumpForce
-    //whichTile
-    //timeLeft
 }

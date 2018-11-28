@@ -7,6 +7,7 @@ public class MovementStats : MonoBehaviour {
     VerticalMovement myVM;
 
     [Header("Misc Values")]
+    public JumpEffect myJE;
     [HideInInspector]
     StatHandler mySH;
     GameController myGameController;
@@ -85,6 +86,7 @@ public class MovementStats : MonoBehaviour {
     }
 
     void SettleMiscValues() {
+        myJE = GetComponent<JumpEffect>();
         myGameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         myGameController.whichTile = whichTile;
         myEndGoal = myEndGoalTransform.position.x;

@@ -6,6 +6,7 @@ public class VerticalMovement {
     MovementStats myMS;
     /*these floats are the force you use to jump, the max time you want your jump to be allowed to happen,
      * and a counter to track how long you have been jumping*/
+    JumpEffect myJE;
     public GameObject player;
     public GameObject groundChecker;
     CapsuleCollider2D gCheck;
@@ -20,6 +21,7 @@ public class VerticalMovement {
     bool stoppedJumping;
     bool canJump;
     public float airControlMult;
+    bool alreadyGrounded = false;
 
     bool jumpSpecial;
     public float jumpSpecialTimer;
@@ -49,16 +51,13 @@ public class VerticalMovement {
 
     public void NewStart() {
         GrabStats();
-        gCheck = groundChecker.GetComponent<CapsuleCollider2D>();
-        //sets the jumpCounter to whatever we set our jumptime to in the editor
-        jumpTimeCounter = jumpTime;
-        myRB = player.GetComponent<Rigidbody2D>();
-        myPM = myMS.myPhysMaterial;
+        
     }
 
     void GrabStats() {
         //player = GameObject.FindGameObjectWithTag("Player");
         myMS = player.GetComponent<MovementStats>();
+        myJE = myMS.myJE;
         whatIsGround = myMS.whatIsGround;
         jumpForce = myMS.jumpForce;
         jumpTime = myMS.jumpTime;
@@ -67,6 +66,11 @@ public class VerticalMovement {
         origFriction = myPM.friction;
         playerCol = player.GetComponent<Collider2D>();
         canJump = myMS.canJump;
+        gCheck = groundChecker.GetComponent<CapsuleCollider2D>();
+        //sets the jumpCounter to whatever we set our jumptime to in the editor
+        jumpTimeCounter = jumpTime;
+        myRB = player.GetComponent<Rigidbody2D>();
+        myPM = myMS.myPhysMaterial;
     }
 
     public void NewUpdate() {
@@ -108,6 +112,10 @@ public class VerticalMovement {
         }
         //if we are grounded...
         if (grounded) {
+            if (!alreadyGrounded) {
+                alreadyGrounded = true;
+                myJE.StopJump();
+            }
             if (stoppedJumping) {
                 jumpSpecialTimer += Time.deltaTime;
                 if (jumpSpecialTimer >= 0.5f) {
@@ -138,14 +146,15 @@ public class VerticalMovement {
     void JumpFunct() {
         //if you press down the jump button...
         if (Input.GetAxisRaw("Jump") > 0) {
-            jumpSpecialTimer = 0f;
             ChangeFriction(0f);
+            jumpSpecialTimer = 0f;
             if (!isHoldingJump) {
                 //and you are on the ground...
                 if (stoppedJumping) {
                     if (grounded) {
                         //allow for slight horizontal adjustments (first frame of the jump)
-                        myRB.velocity = new Vector2(Mathf.Clamp(myRB.velocity.x + myMS.input.x, -myMoveSpeed, myMoveSpeed), jumpForce + jumpSpecialLevel* 1f);
+                        myJE.ActivateJump(jumpSpecialLevel / 2f);
+                        myRB.velocity = new Vector2(Mathf.Clamp(myRB.velocity.x + myMS.input.x, -myMoveSpeed, myMoveSpeed), jumpForce + jumpSpecialLevel);
                         stoppedJumping = false;
                     }
                 }
@@ -164,7 +173,7 @@ public class VerticalMovement {
                 if (jumpTimeCounter < jumpTime) {
                     jumpTimeCounter += Time.deltaTime;
                     //allow for slight horizontal adjustments
-                    myRB.velocity = new Vector2(Mathf.Clamp(myRB.velocity.x + myMS.input.x * airControlMult, -myMoveSpeed, myMoveSpeed), jumpForce + jumpSpecialLevel *1f);
+                    myRB.velocity = new Vector2(Mathf.Clamp(myRB.velocity.x + myMS.input.x * airControlMult, -myMoveSpeed, myMoveSpeed), jumpForce + jumpSpecialLevel);
                 }
             }
         }

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public class GameController : MonoBehaviour {
     StatHandler mySH;
@@ -14,6 +14,7 @@ public class GameController : MonoBehaviour {
     public string[] myTimeLoss;
     bool hasFadedIn = false;
     public float myFadeInSpeed;
+    bool endDay = false;
     [Space(10)]
 
     [HideInInspector]
@@ -26,6 +27,7 @@ public class GameController : MonoBehaviour {
         if (!hasFadedIn) {
             FadeTextToFullAlpha(myFadeInSpeed, myDisplay);
         }
+        endDay = true;
     }
 
     private void Start() {
@@ -35,26 +37,36 @@ public class GameController : MonoBehaviour {
         myDisplay.color = new Color(myDisplay.color.r, myDisplay.color.g, myDisplay.color.b, 0f);
     }
 
+    private void Update() {
+        if (endDay) {
+            Invoke("RestartScene", 4f);
+        }
+    }
+
     public void Death(string deathType) {
         switch (deathType) {
             case "Fall":
                 FallSwitch();
                 myMS.isDead = true;
+                endDay = true;
                 break;
 
             case "Enemy":
                 EnemySwitch();
                 myMS.isDead = true;
+                endDay = true;
                 break;
 
             case "Trap":
                 TrapSwitch();
                 myMS.isDead = true;
+                endDay = true;
                 break;
 
             case "Time":
                 TimeSwitch();
                 myMS.isDead = true;
+                endDay = true;
                 break;
 
             default:
@@ -104,4 +116,7 @@ public class GameController : MonoBehaviour {
         }
         else hasFadedOut = true;
     }*/
+    void RestartScene() {
+        SceneManager.LoadScene(1);
+    }
 }

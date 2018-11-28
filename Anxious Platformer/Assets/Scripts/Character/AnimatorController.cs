@@ -88,11 +88,6 @@ public class AnimatorController : MonoBehaviour {
                 myRB.AddForce(Vector2.up * 25f *-Physics.gravity);
                 hasAddedForce = true;
             }
-            Invoke("RestartScene", 4f);
         }
-    }
-
-    void RestartScene() {
-        SceneManager.LoadScene(1);
     }
 }
