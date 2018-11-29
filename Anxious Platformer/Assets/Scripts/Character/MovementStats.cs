@@ -22,6 +22,7 @@ public class MovementStats : MonoBehaviour {
     public float timeLeft;
     public float maxTime;
     public int whichTile;
+    public bool useTime = true;
     public Transform myEndGoalTransform;
     [HideInInspector]
     public float myEndGoal;
@@ -129,7 +130,15 @@ public class MovementStats : MonoBehaviour {
     }
 
     void CheckVictoryDeathConditions() {
-        timeLeft -= Time.deltaTime;
+        if (useTime) {
+            timeLeft -= Time.deltaTime;
+            if (timeLeft <= 0) {
+                myGameController.Death("Time");
+            }
+        }
+        else {
+            timeLeft = maxTime;
+        }
         if (transform.position.y <= fallDeath) {
             myGameController.Death("Fall");
         }
@@ -138,9 +147,6 @@ public class MovementStats : MonoBehaviour {
         }
         if (myCol.IsTouchingLayers(whatIsTrapDeath)) {
             myGameController.Death("Trap");
-        }
-        if (timeLeft <= 0) {
-            myGameController.Death("Time");
         }
     }
 }

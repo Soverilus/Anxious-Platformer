@@ -108,6 +108,9 @@ public class VerticalMovement {
         }
         else {
             grounded = false;
+            if (alreadyGrounded) {
+                alreadyGrounded = false;
+            }
             //isHoldingJump = true;
         }
         //if we are grounded...
@@ -118,7 +121,7 @@ public class VerticalMovement {
             }
             if (stoppedJumping) {
                 jumpSpecialTimer += Time.deltaTime;
-                if (jumpSpecialTimer >= 0.5f) {
+                if (jumpSpecialTimer >= 0.2f) {
                     jumpSpecialLevel = 0;
                     jumpSpecialTimer = 0f;
                     jumpSpecial = false;

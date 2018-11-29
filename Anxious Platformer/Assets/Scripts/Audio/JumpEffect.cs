@@ -24,13 +24,21 @@ public class JumpEffect : MonoBehaviour {
             newPitch = myAS.pitch;
             myAS.UnPause();
             if (newPitch >= oldPitch && pitchShift) {
-                myAS.pitch = myPitchIncrease + (transform.position.y - jumpStart.y) / 25f;
+                myAS.pitch = myPitchIncrease + (transform.position.y - jumpStart.y) / 10f;
             }
             else {
                 pitchShift = false;
-                myAS.volume -= 2 * Time.deltaTime;
+                myAS.volume -= 3 * Time.deltaTime;
+                if (myAS.volume == 0f) {
+                    startClip = false;
+                    oldPitch = 0f;
+                }
             }
             oldPitch = newPitch;
+        }
+        else {
+            myAS.pitch = 1f;
+            oldPitch = 0f;
         }
     }
 
@@ -38,12 +46,16 @@ public class JumpEffect : MonoBehaviour {
         pitchShift = true;
         myAS.volume = myOGVol;
         startClip = true;
-        myPitchIncrease = level + 1;
+        myPitchIncrease = level/5 + 1;
         jumpStart = transform.position;
     }
     public void StopJump() {
-        myAS.Pause();
-        myAS.time = 0f;
         startClip = false;
+        pitchShift = false;
+        myAS.Pause();
+        myAS.time = 1f;
+        myAS.volume = 0;
+        myAS.pitch = 1f;
+        
     }
 }

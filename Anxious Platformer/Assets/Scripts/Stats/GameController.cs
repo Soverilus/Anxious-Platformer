@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public class GameController : MonoBehaviour {
+    public ShowNumberToText mySNTT;
     StatHandler mySH;
     MovementStats myMS;
     [Header("Possible Texts")]
@@ -39,6 +40,7 @@ public class GameController : MonoBehaviour {
 
     private void Update() {
         if (endDay) {
+            mySNTT.useTime = false;
             Invoke("RestartScene", 4f);
         }
     }
