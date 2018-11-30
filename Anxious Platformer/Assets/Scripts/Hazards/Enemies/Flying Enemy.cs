@@ -4,13 +4,8 @@ using UnityEngine;
 
 public class FlyingEnemy : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    GameObject target;
+    private void Start() {
+        target = GameObject.FindGameObjectWithTag("Player");
+    }
 }
