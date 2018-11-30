@@ -139,14 +139,18 @@ public class MovementStats : MonoBehaviour {
         else {
             timeLeft = maxTime;
         }
-        if (transform.position.y <= fallDeath) {
-            myGameController.Death("Fall");
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision) {
+        Debug.Log("trigger enter " + collision.gameObject);
+        if (((1 << collision.gameObject.layer) & whatIsTrapDeath.value) != 0) {
+            myGameController.Death("Trap");
         }
-        if (myCol.IsTouchingLayers(whatIsEnemyDeath)) {
+        if (((1 << collision.gameObject.layer) & whatIsEnemyDeath.value) != 0) {
             myGameController.Death("Enemy");
         }
-        if (myCol.IsTouchingLayers(whatIsTrapDeath)) {
-            myGameController.Death("Trap");
+        if (((1 << collision.gameObject.layer) & whatIsFallDeath.value) != 0) {
+            myGameController.Death("Fall");
         }
     }
 }
