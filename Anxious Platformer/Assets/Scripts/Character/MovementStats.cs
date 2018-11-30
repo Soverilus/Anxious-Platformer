@@ -7,6 +7,7 @@ public class MovementStats : MonoBehaviour {
     VerticalMovement myVM;
 
     [Header("Misc Values")]
+    bool hasEnded = false;
     public JumpEffect myJE;
     [HideInInspector]
     StatHandler mySH;
@@ -139,18 +140,23 @@ public class MovementStats : MonoBehaviour {
         else {
             timeLeft = maxTime;
         }
+        if (transform.position.y <= fallDeath) {
+            myGameController.Death("Fall");
+            hasEnded = true;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
-        Debug.Log("trigger enter " + collision.gameObject);
-        if (((1 << collision.gameObject.layer) & whatIsTrapDeath.value) != 0) {
+        if (((1 << collision.gameObject.layer) & whatIsTrapDeath.value) != 0 && !hasEnded) {
             myGameController.Death("Trap");
+            hasEnded = true;
         }
-        if (((1 << collision.gameObject.layer) & whatIsEnemyDeath.value) != 0) {
+        if (((1 << collision.gameObject.layer) & whatIsEnemyDeath.value) != 0 && !hasEnded) {
             myGameController.Death("Enemy");
+            hasEnded = true;
         }
-        if (((1 << collision.gameObject.layer) & whatIsFallDeath.value) != 0) {
-            myGameController.Death("Fall");
+        if (((1 << collision.gameObject.layer) & whatIsFallDeath.value) != 0 && !hasEnded) {
+            hasEnded = true;
         }
     }
 }
