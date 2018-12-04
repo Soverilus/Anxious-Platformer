@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class HorizontalMovement {
     MovementStats myMS;
     private Rigidbody2D myRB;
@@ -17,9 +17,12 @@ public class HorizontalMovement {
     bool hasDisplayedRight = false;
     float maxClamp;
     float minClamp;
+    Text myText;
+    GameController myGC;
 
     public void NewStart() {
         GrabStats();
+        myGC = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
     }
 
     void GrabStats() {

@@ -77,7 +77,8 @@ public class MovementStats : MonoBehaviour {
         jumpForce = mySH.jumpForceMult * origJumpForce;
         Physics.gravity = new Vector3(0f, mySH.gravityMultiplier * originalGravity.y, 0f);
         whichTile = mySH.whichTileRand;
-        timeLeft = mySH.timeLeft;
+        maxTime = mySH.timeLeft;
+        timeLeft = maxTime;
     }
 
     private void Start() {

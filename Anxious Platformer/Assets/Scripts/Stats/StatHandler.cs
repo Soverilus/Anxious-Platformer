@@ -19,13 +19,13 @@ public class StatHandler : MonoBehaviour {
     //updates at the start of the first frame called by MovementStats;
     public void StatHandlerStart(float maxTime) {
         if (dayNumber >= 2 && Random.Range(0, 4) > 2) {
-            canGoRight = false;
+            //canGoRight = false;
         }
         else {
             canGoRight = true;
         }
         if (dayNumber >= 2 && Random.Range(0, 2) == 1) {
-            canGoLeft = false;
+            //canGoLeft = false;
         }
         else {
             canGoLeft = true;

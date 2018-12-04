@@ -112,12 +112,6 @@ public class GameController : MonoBehaviour {
         else hasFadedIn = true;
     }
 
-    /*void FadeTextToZeroAlpha(float t, Text i) {
-        if (i.color.a > 0.0f) {
-            i.color = new Color(i.color.r, i.color.g, i.color.b, i.color.a - (Time.deltaTime / t));
-        }
-        else hasFadedOut = true;
-    }*/
     void RestartScene() {
         SceneManager.LoadScene(1);
     }

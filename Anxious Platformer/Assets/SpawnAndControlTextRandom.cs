@@ -29,10 +29,16 @@ public class SpawnAndControlTextRandom : MonoBehaviour {
     }
 
     private void Update() {
+        if (maxTime != myMS.maxTime) {
+            maxTime = myMS.maxTime;
+        }
         Mathf.Clamp(timeLeft += Time.deltaTime, 0f, maxTime);
         timeMultiplier = timeLeft / maxTime;
         deltaTimeIntense = Time.deltaTime * intensity * timeMultiplier;
         timer += deltaTimeIntense;
+        if (timeLeft >= maxTime) {
+            Debug.Log("this timer");
+        }
 
         if (timer >= 3) {
             howManyTimers = Mathf.RoundToInt(timer / 3f);

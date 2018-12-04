@@ -14,12 +14,14 @@ public class TileSprite : MonoBehaviour {
 
 
     public void HandleSprites() {
-        myGameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
-        whichTile = myGameController.whichTile;
-        for (int i = 0; i < mySprites.Length; i++) {
-            mySprites[i].SetActive(false);
-            if (i == whichTile) {
-                mySprites[i].SetActive(true);
+        if (GameObject.FindGameObjectWithTag("GameController") != null) {
+            myGameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+            whichTile = myGameController.whichTile;
+            for (int i = 0; i < mySprites.Length; i++) {
+                mySprites[i].SetActive(false);
+                if (i == whichTile) {
+                    mySprites[i].SetActive(true);
+                }
             }
         }
     }

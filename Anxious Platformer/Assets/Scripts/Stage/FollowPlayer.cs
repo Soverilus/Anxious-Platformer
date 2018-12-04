@@ -15,7 +15,7 @@ public class FollowPlayer : MonoBehaviour {
         thisCam = GetComponent<Camera>();
     }
 
-    private void FixedUpdate() {
+    private void LateUpdate() {
         myTarget = myTargetObj.transform.position;
         transform.position = Vector3.Lerp(transform.position, UseMyZAxis(myTarget), 0.25f);
     }
