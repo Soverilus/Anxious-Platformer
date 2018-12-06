@@ -11,7 +11,7 @@ public class MoveBackALittle : MonoBehaviour {
     Vector3 oldPos;
     Vector3 newPos;
 
-    private void LateUpdate() {
+    private void FixedUpdate() {
         newPos = transform.position;
         if (newPos != oldPos) {
                 myBG2.transform.position = new Vector3(myBG2.transform.position.x - (((newPos.x - oldPos.x) * bG2ChangeRate) * Time.deltaTime), myBG2.transform.position.y, myBG2.transform.position.z);
