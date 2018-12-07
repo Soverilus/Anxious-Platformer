@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class SceneManagmerScript : MonoBehaviour {
 public void QuitApplication() {
-        QuitApplication();
+        Application.Quit();
     }
 
     public void LoadScene(string myScene) {

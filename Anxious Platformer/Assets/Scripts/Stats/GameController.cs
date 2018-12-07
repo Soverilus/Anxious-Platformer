@@ -24,7 +24,7 @@ public class GameController : MonoBehaviour {
     int myDisplayChoice;
 
     public void Victory() {
-        myDisplay.text = victory[Mathf.Clamp(mySH.dayNumber, 0,victory.Length)];
+        myDisplay.text = victory[Mathf.Clamp(mySH.dayNumber, 0, victory.Length -1)];
         if (!hasFadedIn) {
             FadeTextToFullAlpha(myFadeInSpeed, myDisplay);
         }
@@ -42,6 +42,9 @@ public class GameController : MonoBehaviour {
         if (endDay) {
             mySNTT.useTime = false;
             Invoke("RestartScene", 4f);
+        }
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            SceneManager.LoadScene("MainMenu");
         }
     }
 
