@@ -82,6 +82,7 @@ public class MovementStats : MonoBehaviour {
     }
 
     private void Start() {
+        Cursor.visible = false;
         StartEarly();
         SettleMiscValues();
         GetMovements();
@@ -159,5 +160,14 @@ public class MovementStats : MonoBehaviour {
         if (((1 << collision.gameObject.layer) & whatIsFallDeath.value) != 0 && !hasEnded) {
             hasEnded = true;
         }
+    }
+    private void OnApplicationQuit() {
+        if (friction > 0) {
+            myVM.ChangeFriction(friction);
+        }
+        else {
+            myVM.ChangeFriction(0.4f);
+        }
+        Cursor.visible = true;
     }
 }

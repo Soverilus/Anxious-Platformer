@@ -140,7 +140,7 @@ public class VerticalMovement {
         }
     }
 
-    void ChangeFriction(float f) {
+    public void ChangeFriction(float f) {
         playerCol.enabled = false;
         myPM.friction = f;
         playerCol.enabled = true;

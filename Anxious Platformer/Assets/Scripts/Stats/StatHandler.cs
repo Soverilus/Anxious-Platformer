@@ -18,6 +18,9 @@ public class StatHandler : MonoBehaviour {
 
     //updates at the start of the first frame called by MovementStats;
     public void StatHandlerStart(float maxTime) {
+        if (dayNumber == 7) {
+            dayNumber = 0;
+        }
         if (dayNumber >= 2 && Random.Range(0, 4) > 2) {
             //canGoRight = false;
         }
@@ -31,9 +34,9 @@ public class StatHandler : MonoBehaviour {
             canGoLeft = true;
         }
         if (dayNumber >= 2) {
-            gravityMultiplier = Random.Range(0.95f, 1.05f);
-            myMoveSpeedMult = Random.Range(0.95f, 1.05f);
-            jumpForceMult = Random.Range(0.95f, 1.05f);
+            gravityMultiplier = Random.Range(0.9f, 1.1f);
+            myMoveSpeedMult = Random.Range(0.9f, 1.1f);
+            jumpForceMult = Random.Range(0.9f, 1.1f);
         }
         else {
             gravityMultiplier = 1f;
@@ -44,10 +47,10 @@ public class StatHandler : MonoBehaviour {
         if (dayNumber <= 3 && dayNumber > 1) {
             whichTileRand = Random.Range(2, 4);
         }
-        else if (dayNumber <= 6) {
+        else if (dayNumber <= 4) {
             whichTileRand = Random.Range(1, 4);
         }
-        else if (dayNumber > 6) {
+        else if (dayNumber > 4) {
             whichTileRand = Random.Range(0, 4);
         }
         timeLeft = Random.Range(0.5f, 1.75f) * maxTime;
