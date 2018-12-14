@@ -385,6 +385,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 866746cb2d514b24898ed2918b638879, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speedUpMult: 1
+  maxSpawnSpeed: 100
   inGame: 0
   myDayTexts: []
   myThoughts:

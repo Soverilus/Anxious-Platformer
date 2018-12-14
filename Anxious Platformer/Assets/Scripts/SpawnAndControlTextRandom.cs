@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 public class SpawnAndControlTextRandom : MonoBehaviour {
+    public float speedUpMult;
+
+    public float maxSpawnSpeed;
+
     public bool inGame;
     List<Text> myTexts = new List<Text>();
     List<bool> myFades = new List<bool>();
     public string[] myDayTexts;
     public string[] myThoughts;
+    int maxTexts;
     public Text myPrefab;
     public float intensity = 1f;
     float originalIntensity;
@@ -26,6 +31,7 @@ public class SpawnAndControlTextRandom : MonoBehaviour {
     float timeMultiplier;
 
     private void Start() {
+        maxTexts = Mathf.RoundToInt(intensity * 10);
         originalIntensity = intensity;
         if (inGame) {
             myMS = GameObject.FindGameObjectWithTag("Player").GetComponent<MovementStats>();
@@ -39,6 +45,7 @@ public class SpawnAndControlTextRandom : MonoBehaviour {
     }
 
     private void Update() {
+        Time.timeScale = speedUpMult;
         if (inGame) {
             if (maxTime != myMS.maxTime) {
                 maxTime = myMS.maxTime;
@@ -46,34 +53,39 @@ public class SpawnAndControlTextRandom : MonoBehaviour {
         }
         Mathf.Clamp(timeLeft += Time.deltaTime, 0f, maxTime);
         timeMultiplier = timeLeft / maxTime;
-        deltaTimeIntense = Time.deltaTime * intensity * timeMultiplier *2f;
+        deltaTimeIntense = Mathf.Clamp(Time.deltaTime * intensity * timeMultiplier *2f, 0, maxSpawnSpeed*timeMultiplier);
         timer += deltaTimeIntense;
         if (timeLeft >= maxTime) {
             Debug.Log("this timer");
         }
 
-        if (timer >= 3) {
+        if (timer >= 3 && myTexts.Count <= maxTexts) {
             howManyTimers = Mathf.RoundToInt(timer / 3f);
             for (int k = howManyTimers; k > 0; k--) {
-                myText = Instantiate(myPrefab, gameObject.transform);
-                if (inGame) {
-                    myText.rectTransform.localPosition = new Vector3(Random.Range(-myCanvas.pixelRect.size.x / 2.5f, myCanvas.pixelRect.size.x / 2.5f), Random.Range(-myCanvas.pixelRect.size.y / 2.5f, myCanvas.pixelRect.size.y / 2.5f), 0f);
-                }
-                else {
-                    myText.rectTransform.localPosition = new Vector3(Random.Range(-myCanvas.pixelRect.size.x / 2.5f, myCanvas.pixelRect.size.x / 2.5f), Random.Range(lowerSpawnArea.localPosition.y, myCanvas.pixelRect.size.y / 2.5f), 0f);
-                }
-                myFades.Add(false);
-                myTexts.Add(myText);
-                myText.color = new Color(myText.color.r, myText.color.g, myText.color.b, 0f);
-                myText.text = myThoughts[Random.Range(0, myThoughts.Length)];
-                if (inGame) {
-                    int r = Random.Range(0, 10);
-                    if (r == 0) {
-                        myText.text = myDayTexts[Mathf.Clamp(mySH.dayNumber, 0, myDayTexts.Length - 1)];
+                if (myTexts.Count <= maxTexts) {
+                    myText = Instantiate(myPrefab, gameObject.transform);
+                    if (inGame) {
+                        myText.rectTransform.localPosition = new Vector3(Random.Range(-myCanvas.pixelRect.size.x / 2.5f, myCanvas.pixelRect.size.x / 2.5f), Random.Range(-myCanvas.pixelRect.size.y / 2.5f, myCanvas.pixelRect.size.y / 2.5f), 0f);
+                    }
+                    else {
+                        myText.rectTransform.localPosition = new Vector3(Random.Range(-myCanvas.pixelRect.size.x / 2.5f, myCanvas.pixelRect.size.x / 2.5f), Random.Range(lowerSpawnArea.localPosition.y, myCanvas.pixelRect.size.y / 2.5f), 0f);
+                    }
+                    myFades.Add(false);
+                    myTexts.Add(myText);
+                    myText.color = new Color(myText.color.r, myText.color.g, myText.color.b, 0f);
+                    myText.text = myThoughts[Random.Range(0, myThoughts.Length)];
+                    if (inGame) {
+                        int r = Random.Range(0, 10);
+                        if (r == 0) {
+                            myText.text = myDayTexts[Mathf.Clamp(mySH.dayNumber, 0, myDayTexts.Length - 1)];
+                        }
+                    }
+                    if (intensity < 3f * originalIntensity) {
+                        intensity = Mathf.Clamp(intensity + 0.2f, 0, maxSpawnSpeed);
                     }
                 }
-                if (intensity < 3f * originalIntensity) {
-                    intensity += 0.2f;
+                else {
+                    intensity = Mathf.Clamp(intensity + 0.2f, 0, maxSpawnSpeed);
                 }
                 timer = 0f;
             }
